@@ -1,0 +1,11 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.especificationRoutes = void 0;
+var createspecificationcontrole_1 = require("@modules/cars/usecases/createspecification/createspecificationcontrole");
+var express_1 = require("express");
+var ensureAdmin_1 = require("@shared/infra/http/middlewares/ensureAdmin");
+var ensureAuthenticated_1 = require("@shared/infra/http/middlewares/ensureAuthenticated");
+var especificationRoutes = (0, express_1.Router)();
+exports.especificationRoutes = especificationRoutes;
+var createespecificationcontrole = new createspecificationcontrole_1.Createspecificationcontrole();
+especificationRoutes.post("/", ensureAuthenticated_1.ensureAuthenticated, ensureAdmin_1.ensureAdmin, createespecificationcontrole.handle);

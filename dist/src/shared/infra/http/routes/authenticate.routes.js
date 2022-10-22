@@ -1,0 +1,12 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.authenticateRouter = void 0;
+var Authenticateusercontroller_1 = require("@modules/accounts/usecases/authenticateuser/Authenticateusercontroller");
+var refleshtokencontroller_1 = require("@modules/accounts/usecases/refleshtoken.ts/refleshtokencontroller");
+var express_1 = require("express");
+var authenticateRouter = (0, express_1.Router)();
+exports.authenticateRouter = authenticateRouter;
+var authenticatecontroller = new Authenticateusercontroller_1.Authenticatecontroller();
+var refleshtokencontroller = new refleshtokencontroller_1.Refleshtokencontroller();
+authenticateRouter.post("/sessions", authenticatecontroller.handle);
+authenticateRouter.post("/reflesh-token", refleshtokencontroller.handle);

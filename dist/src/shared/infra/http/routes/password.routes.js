@@ -1,0 +1,12 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.passwordRoutes = void 0;
+var resetpasswordcontroller_1 = require("@modules/accounts/usecases/resetpassworduser/resetpasswordcontroller");
+var sendforgotpasswordmailcontroller_1 = require("@modules/accounts/usecases/sendforgotpasswordmail/sendforgotpasswordmailcontroller");
+var express_1 = require("express");
+var passwordRoutes = (0, express_1.Router)();
+exports.passwordRoutes = passwordRoutes;
+var sendforgotpasswordmailcontroler = new sendforgotpasswordmailcontroller_1.Sendforgotpasswordmailcontroler();
+var resetpasswordcontroller = new resetpasswordcontroller_1.Resetpasswordcontroller();
+passwordRoutes.post("/forgot", sendforgotpasswordmailcontroler.handle);
+passwordRoutes.post("/reset", resetpasswordcontroller.handle);

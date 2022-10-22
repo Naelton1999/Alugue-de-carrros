@@ -1,0 +1,26 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.carsRoutes = void 0;
+var express_1 = require("express");
+var createcarcontroler_1 = require("@modules/cars/usecases/createcar/createcarcontroler");
+var ensureAuthenticated_1 = require("../middlewares/ensureAuthenticated");
+var listavailablecarcontroler_1 = require("@modules/cars/usecases/listavailablecars/listavailablecarcontroler");
+var createcarspecificationcontroller_1 = require("@modules/cars/usecases/createcarspecification/createcarspecificationcontroller");
+var uploadcarimagecontroller_1 = require("@modules/cars/usecases/uploadcarimage/uploadcarimagecontroller");
+var upload_1 = __importDefault(require("@config/upload"));
+var multer_1 = __importDefault(require("multer"));
+var ensureAdmin_1 = require("../middlewares/ensureAdmin");
+var carsRoutes = (0, express_1.Router)();
+exports.carsRoutes = carsRoutes;
+var createcarcontroler = new createcarcontroler_1.Createcarcontroler();
+var listavailablecarcontroler = new listavailablecarcontroler_1.Listavailablecarcontroler();
+var createcarspecificationcontroller = new createcarspecificationcontroller_1.Createcarspecificationcontroller();
+var uploadcarimagecontroller = new uploadcarimagecontroller_1.Uploadcarimagecontroller();
+var upload = (0, multer_1.default)(upload_1.default);
+carsRoutes.post("/", ensureAuthenticated_1.ensureAuthenticated, ensureAdmin_1.ensureAdmin, createcarcontroler.handle);
+carsRoutes.get("/available", listavailablecarcontroler.handle);
+carsRoutes.post("/specification/:id", ensureAuthenticated_1.ensureAuthenticated, ensureAdmin_1.ensureAdmin, createcarspecificationcontroller.handle);
+carsRoutes.post("/images/:id", ensureAuthenticated_1.ensureAuthenticated, ensureAdmin_1.ensureAdmin, upload.array("images"), uploadcarimagecontroller.handle);
